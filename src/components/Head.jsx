@@ -1,27 +1,44 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/hamburgerSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
+import { cacheResults } from "../utils/searchSlice";
 
 const Head = () => {
   const [SearchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestion] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const dispatch = useDispatch();
+
+  const searchCache = useSelector((store) => store.search);
   useEffect(() => {
-    const timer = setTimeout(() => getSearchSuggestions(), 200);
-    // debouncin concept it will call after only 200 miliseconds
+    const timer = setTimeout(() => {
+      if (searchCache[SearchQuery]) {
+        setSuggestion(searchCache[SearchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
+    }, 200);
+
+    // debouncing concept it will call after only 200 miliseconds
     return () => {
       clearTimeout(timer);
     };
   }),
     [SearchQuery];
-  const dispatch = useDispatch();
 
   const getSearchSuggestions = async () => {
     const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + SearchQuery);
     const jsonData = await data.json();
     setSuggestion(jsonData[1]);
-    console.log(jsonData);
+    // console.log(jsonData);
+
+    // dispatch an action to update the cache
+    dispatch(
+      cacheResults({
+        [SearchQuery]: jsonData[1],
+      })
+    );
   };
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
