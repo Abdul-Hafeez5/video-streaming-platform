@@ -1,9 +1,28 @@
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/hamburgerSlice";
+import { useEffect, useState } from "react";
+import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
 
 const Head = () => {
+  const [SearchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestion] = useState([]);
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => getSearchSuggestions(), 200);
+    // debouncin concept it will call after only 200 miliseconds
+    return () => {
+      clearTimeout(timer);
+    };
+  }),
+    [SearchQuery];
   const dispatch = useDispatch();
 
+  const getSearchSuggestions = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + SearchQuery);
+    const jsonData = await data.json();
+    setSuggestion(jsonData[1]);
+    console.log(jsonData);
+  };
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
@@ -34,25 +53,60 @@ const Head = () => {
         </a>
       </div>
       <div className="flex items-center  justify-center col-span-9">
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded-l-full w-1/2"
-          placeholder="Search"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1}
-          stroke="currentColor"
-          className="w-8 h-8 centre p-3  border rounded-r-full"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          />
-        </svg>
+        <div>
+          <div className="flex">
+            <input
+              type="text"
+              className="p-2 border border-gray-300 rounded-l-full w-96"
+              placeholder="Search"
+              value={SearchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setShowSuggestion(true)}
+              onBlur={() => setShowSuggestion(false)}
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1}
+              stroke="currentColor"
+              className="w-8 h-8 centre   border "
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          {showSuggestion && (
+            <div className="fixed bg-white w-96  rounded-lg px-4 py-2">
+              <ul>
+                <li className="flex items-center hover:bg-gray-100 px-2 py-1 gap-x-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1}
+                    stroke="currentColor"
+                    className="w-4 h-4 "
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                    />
+                  </svg>
+                  {suggestions.map((s) => (
+                    <span className="  text-base" key={s}>
+                      {s}
+                    </span>
+                  ))}
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
