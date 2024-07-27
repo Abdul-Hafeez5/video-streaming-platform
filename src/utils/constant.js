@@ -9,3 +9,111 @@ export const YOUTUBE_SEARCH_SUGGESTION_API =
 // H  G
 
 // "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=Pakistan&key=" +API_KEY;
+
+export const commentData = [
+  {
+    name: "Abdul Hafeez",
+    comment:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+    replies: [
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [{
+          name: "Abdul Hafeez",
+          comment:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+          replies: [{
+            name: "Abdul Hafeez",
+            comment:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+            replies: [],
+          },],
+        },],
+      },
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [],
+      },
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [],
+      },
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [
+          {
+            name: "Abdul Hafeez",
+            comment:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+            replies: [
+              {
+                name: "Abdul Hafeez",
+                comment:
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+                replies: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Abdul Hafeez",
+    comment:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+    replies: [
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [],
+      },
+      {
+        name: "Abdul Hafeez",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+        replies: [
+          {
+            name: "Abdul Hafeez",
+            comment:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+            replies: [],
+          },
+          {
+            name: "Abdul Hafeez",
+            comment:
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+            replies: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Abdul Hafeez",
+    comment:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+    replies: [],
+  },
+  {
+    name: "Abdul Hafeez",
+    comment:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+    replies: [],
+  },
+  {
+    name: "Abdul Hafeez",
+    comment:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nulla quaerat harum",
+    replies: [],
+  },
+];
