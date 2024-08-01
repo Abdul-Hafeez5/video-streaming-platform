@@ -1,19 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ChatMessage from "./ChatMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addComments } from "../redux/chatSlice";
+import { generateRandomName, randomComment } from "../utils/helper";
+
 const LiveChat = () => {
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const chatMessages = useSelector((store) => store.liveComments.messages);
-
+  const handleComment = (e) => {
+    e.preventDefault();
+    dispatch(
+      addComments({
+        name: "Abdul",
+        comment: comment,
+      })
+    );
+    setComment("");
+  };
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("api pollin");
-
+      // API CALL ERE
       dispatch(
         addComments({
-          name: "Arman",
-          comment: "lorem ipsum dollar sit amet",
+          name: generateRandomName(),
+          comment: randomComment(20),
           avatar:
             "https://yt4.ggpht.com/f60e9_dm56CWg9bZ5kYXYYMhGvn2LMRO5yQWlRJO2wk8cqq4IUvEokmyGzjGWOyXlBCQCQ2CLg=s32-c-k-c0x00ffffff-no-rj",
         })
@@ -23,16 +34,29 @@ const LiveChat = () => {
   }, []);
 
   return (
-    <div className="  w-full h-[550px] p-2 border bg-slate-100 rounded-lg ml-2 border-r-gray-500 overflow-y-scroll">
-      {chatMessages.map((messages, index) => (
-        <ChatMessage
-          key={index}
-          name={messages.name}
-          comment={messages.comment}
-          avatar={messages.avatar}
+    <>
+      <div className="  w-full h-[550px] p-2 border bg-slate-100 rounded-lg ml-2 border-r-gray-500 overflow-y-scroll flex flex-col-reverse">
+        {chatMessages.map((messages, index) => (
+          <ChatMessage
+            key={index}
+            name={messages.name}
+            comment={messages.comment}
+            avatar={messages.avatar}
+          />
+        ))}
+      </div>
+      <form className="flex ml-2 items-center mt-1" onSubmit={handleComment}>
+        <input
+          type="text"
+          className="flex-1 p-2 bg-gray-100"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         />
-      ))}
-    </div>
+        <button className="py-2 px-3 mx-2 rounded-md bg-green-200 hover:bg-green-400 ">
+          Send
+        </button>
+      </form>
+    </>
   );
 };
 
