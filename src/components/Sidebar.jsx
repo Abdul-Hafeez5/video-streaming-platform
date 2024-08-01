@@ -1,11 +1,13 @@
 import { IoMdHome } from "react-icons/io";
 import { SiShortcut } from "react-icons/si";
-import { MdSubscriptions } from "react-icons/md";
+import {
+  MdSubscriptions,
+  MdOutlinePlaylistPlay,
+  MdOutlineWatchLater,
+} from "react-icons/md";
 import { LuUserSquare2 } from "react-icons/lu";
 import { FaHistory } from "react-icons/fa";
-import { MdOutlinePlaylistPlay } from "react-icons/md";
 import { BiSolidVideos } from "react-icons/bi";
-import { MdOutlineWatchLater } from "react-icons/md";
 import { SlLike } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";

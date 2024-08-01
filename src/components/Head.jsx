@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu } from "../utils/hamburgerSlice";
+import { toggleMenu } from "../redux/hamburgerSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
-import { cacheResults } from "../utils/searchSlice";
+import { cacheResults } from "../redux/searchSlice";
 
 const Head = () => {
   const [SearchQuery, setSearchQuery] = useState("");
