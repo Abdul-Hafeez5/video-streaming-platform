@@ -7,9 +7,7 @@ export const YOUTUBE_VIOEOS_API =
 
 export const YOUTUBE_SEARCH_SUGGESTION_API =
   "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
-// H  G
 
-// "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=Pakistan&key=" +API_KEY;
 
 export const commentData = [
   {
