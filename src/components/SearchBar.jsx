@@ -50,18 +50,18 @@ const SearchBar = () => {
   //   };
 
   return (
-    <div className="flex-1 flex items-center bg-gray-100  p-2 shadow-md  rounded-full w-full max-w-lg">
+    <div className="flex-1 flex items-center bg-gray-100 py-2 px-3 border border-gray-300 rounded-full w-full max-w-lg">
       <CiSearch />
       <input
         type="text"
-        className="flex-grow px-4  focus:outline-none bg-transparent"
+        className="flex-grow px-4 focus:outline-none bg-transparent"
         placeholder="Search"
         // value={SearchQuery}
         // onChange={(e) => setSearchQuery(e.target.value)}
         // onFocus={() => setShowSuggestion(true)}
         // onBlur={() => setShowSuggestion(false)}
       />
-      <CiSearch />
+      <CiSearch  className="w-6  h-6 "/>
     </div>
   );
 };
