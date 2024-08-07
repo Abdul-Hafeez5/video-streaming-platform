@@ -16,7 +16,7 @@ const VideoContainer = () => {
     setVideos(jsonResult.items);
   };
   return (
-    <div className="flex flex-wrap gap-2 mt-2">
+    <div className="flex flex-wrap gap-2 ">
       {videos.map((video) => (
         <Link to={`/watch?v=${video.id}`} key={video.id}>
           <VideoCard info={video} />{" "}

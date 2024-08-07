@@ -8,7 +8,7 @@ const buttonList = [
   "Cricket",
   "News",
   "Cooking",
-  "Computer Science",
+  "Computer",
   "Gaza",
   "JavaScript",
   "Mixes",

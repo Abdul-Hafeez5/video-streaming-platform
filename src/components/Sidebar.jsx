@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   if (!isMenuOpen) return null; // this paterns knows as early returns
   return (
-    <div className="col-span-2 ml-2 mr-16">
+    <div className="col-span-2 ml-2 mr-16 mt-4">
       <ul className="space-y-4 mb-3">
         <Link to="/">
           <li className="flex items-center space-x-4 hover:bg-gray-200 px-2 py-1 rounded cursor-pointer">
