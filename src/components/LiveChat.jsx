@@ -20,7 +20,7 @@ const LiveChat = () => {
   };
   useEffect(() => {
     const timer = setInterval(() => {
-      // API CALL ERE
+      // API CALL HERE
       dispatch(
         addComments({
           name: generateRandomName(),

@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+
 const VideoCard = ({ info }) => {
   if (!info) return "Loading";
 
@@ -22,8 +23,8 @@ const VideoCard = ({ info }) => {
   );
 };
 
-VideoCard.propTypes = {
-  info: PropTypes.object.isRequired,
-};
+// VideoCard.propTypes = {
+//   info: PropTypes.object.isRequired,
+// };
 
 export default VideoCard;
