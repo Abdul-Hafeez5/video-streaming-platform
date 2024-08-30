@@ -12,11 +12,11 @@ const VideoContainer = () => {
   const getVideos = async () => {
     const data = await fetch(YOUTUBE_VIOEOS_API);
     const jsonResult = await data.json();
-    // console.log(jsonResult);
+    console.log(jsonResult);
     setVideos(jsonResult.items);
   };
   return (
-    <div className="flex flex-wrap gap-2 ">
+    <div className="flex h-screen  w-full scroll-y-auto flex-wrap gap-y-4  pt-16  ">
       {videos.map((video) => (
         <Link to={`/watch?v=${video.id}`} key={video.id}>
           <VideoCard info={video} />

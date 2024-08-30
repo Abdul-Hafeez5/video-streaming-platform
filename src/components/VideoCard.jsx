@@ -8,16 +8,23 @@ const VideoCard = ({ info }) => {
   const { viewCount } = statistics;
 
   return (
-    <div className="shadow-lg w-72 h-72 mx-1  ">
+    <div className=" w-80 h-80 mx-1  ">
       <img
         src={thumbnails.medium.url}
         alt="video"
-        className="my-2 p-1 rounded-lg"
+        className="w-full rounded-xl "
       />
-      <div>
-        <h1 className="font-bold my-1">{title}</h1>
-        <h1>{channelTitle}</h1>
-        <span className="mx-3">{viewCount} Views</span>
+
+      <div className="flex gap-x-4 items-center mx-2 my-2">
+        <div className="w-8 h-8">
+          {" "}
+          <img src={thumbnails.medium.url} alt="" className="w-full h-full  rounded-full object-cover"/>
+        </div>
+        <div>
+          <h1 className="font-bold my-1">{title}</h1>
+          <h1>{channelTitle}</h1>
+          <span className="mx-3">{viewCount} Views</span>
+        </div>
       </div>
     </div>
   );

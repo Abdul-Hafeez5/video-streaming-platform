@@ -50,8 +50,7 @@ const SearchBar = () => {
   //   };
 
   return (
-    <div className="flex-1 flex items-center bg-gray-100 py-2 px-3 border border-gray-300 rounded-full w-full max-w-lg">
-      <CiSearch />
+    <div className=" hidden flex-1 sm:flex items-center   py-2 px-2 border border-gray-300 rounded-full w-full min-w-64 max-w-lg mr-2">
       <input
         type="text"
         className="flex-grow px-4 focus:outline-none bg-transparent"
@@ -61,7 +60,7 @@ const SearchBar = () => {
         // onFocus={() => setShowSuggestion(true)}
         // onBlur={() => setShowSuggestion(false)}
       />
-      <CiSearch  className="w-6  h-6 "/>
+      <CiSearch className="w-6  h-6 cursor-pointer " />
     </div>
   );
 };

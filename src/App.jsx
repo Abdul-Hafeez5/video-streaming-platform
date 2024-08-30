@@ -6,13 +6,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainContainer from "./components/MainContainer";
 import { lazy, Suspense } from "react";
 
-const WatchPage = lazy(()=> import("./components/WatchPage"))
+const WatchPage = lazy(() => import("./components/WatchPage"));
 
 function App() {
   const appLayout = createBrowserRouter([
     {
       path: "/",
-      element: <Body />,
+      element: (
+        <>
+          <Head />,
+          <Body />,
+        </>
+      ),
       children: [
         {
           path: "/",
@@ -20,9 +25,11 @@ function App() {
         },
         {
           path: "watch",
-          element: (<Suspense>
-            <WatchPage/>
-          </Suspense>),
+          element: (
+            <Suspense>
+              <WatchPage />
+            </Suspense>
+          ),
         },
       ],
     },
@@ -30,7 +37,7 @@ function App() {
   return (
     <Provider store={store}>
       <div>
-        <Head />
+        {/* <Head /> */}
         <RouterProvider router={appLayout} />
       </div>
     </Provider>
