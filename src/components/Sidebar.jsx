@@ -1,14 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { sideList } from "../utils/constant";
+import { closeMenu } from "../redux/hamburgerSlice";
 
 const Sidebar = () => {
   const isMenuOpen = useSelector((store) => store.hamburger.isMenuOpen);
-
+  const dispatch = useDispatch();
+  if (window.innerWidth < 640 && isMenuOpen) {
+    dispatch(closeMenu());
+  }
   if (!isMenuOpen) return null; // this paterns knows as early returns
   return (
-    <div className="col-span-2 mx-2 fixed w-64 h-screen mt-6 bg-white ">
+    <div
+      className={`${
+        isMenuOpen ? "block" : "hidden"
+      } sm:block sm:col-span-2 mx-2 fixed sm:w-64 h-screen mt-6 bg-white  `}
+    >
       <ul className="space-y-4 mb-3 h-full overflow-y-auto">
         {sideList.map((list, index) => (
           <Link to={list.url} key={index}>
