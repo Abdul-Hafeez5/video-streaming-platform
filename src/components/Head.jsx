@@ -14,7 +14,7 @@ const Head = () => {
     dispatch(toggleMenu());
   };
   return (
-    <div className=" fixed top-0  bg-white w-full  grid grid-flow-col pt-2 mx-2">
+    <div className=" fixed top-0 z-30  bg-white w-full  grid grid-flow-col pt-2 mx-2">
       <div className="flex items-center col-span-2 gap-x-4 lg:gap-x-8  ">
         <RxHamburgerMenu
           onClick={() => toggleMenuHandler()}

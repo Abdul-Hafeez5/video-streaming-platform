@@ -1,66 +1,94 @@
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-// import { useEffect, useState } from "react";
-// import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
-// import { cacheResults } from "../redux/searchSlice";
+import { useEffect, useState } from "react";
+import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
+import { cacheResults } from "../redux/searchSlice";
 import { CiSearch } from "react-icons/ci";
+import { fetchVideos } from "../redux/videoSlice";
 
 const SearchBar = () => {
-  //   const [SearchQuery, setSearchQuery] = useState("");
-  //   const [suggestions, setSuggestion] = useState([]);
-  //   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [SearchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestion] = useState([]);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  //   const searchCache = useSelector((store) => store.search);
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       if (searchCache[SearchQuery]) {
-  //         setSuggestion(searchCache[SearchQuery]);
-  //       } else {
-  //         getSearchSuggestions();
-  //       }
-  //     }, 200);
+  const searchCache = useSelector((store) => store.search);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchCache[SearchQuery]) {
+        setSuggestion(searchCache[SearchQuery]);
+      } else if (SearchQuery.length > 0) {
+        getSearchSuggestions();
+      } else {
+        setSuggestion([]);
+      }
+    }, 200);
 
-  //     // debouncing concept it will call after only 200 miliseconds
-  //     return () => {
-  //       clearTimeout(timer);
-  //     };
-  //   }, [SearchQuery]);
+    // debouncing concept it will call after only 200 miliseconds
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [SearchQuery]);
 
-  //   const getSearchSuggestions = async () => {
-  //     try {
-  //       const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + SearchQuery);
-  //       if (!data.ok) {
-  //         throw new Error(`http error status: ${data.status}`);
-  //       }
-  //       const jsonData = await data.json();
-  //       console.log(jsonData);
-  //       // setSuggestion(jsonData[1]);
+  const getSearchSuggestions = async () => {
+    try {
+      const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + SearchQuery);
+      if (!data.ok) {
+        throw new Error(`http error status: ${data.status}`);
+      }
+      const jsonData = await data.json();
+      // console.log(jsonData);
+      setSuggestion(jsonData[1]);
 
-  //       // dispatch an action to update the cache
-  //       dispatch(
-  //         cacheResults({
-  //           [SearchQuery]: jsonData[1],
-  //         })
-  //       );
-  //     } catch (error) {
-  //       console.log("Error fetching data" + error);
-  //     }
-  //   };
+      // dispatch an action to update the cache
+      dispatch(
+        cacheResults({
+          [SearchQuery]: jsonData[1],
+        })
+      );
+    } catch (error) {
+      console.log("Error fetching data" + error);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    dispatch(fetchVideos(suggestion));
+    setSearchQuery("");
+    setSuggestion([]);
+  };
 
   return (
-    <div className=" hidden flex-1 sm:flex items-center   py-2 px-2 border border-gray-300 rounded-full w-full min-w-64 max-w-lg mr-2">
-      <input
-        type="text"
-        className="flex-grow px-4 focus:outline-none bg-transparent"
-        placeholder="Search"
-        // value={SearchQuery}
-        // onChange={(e) => setSearchQuery(e.target.value)}
-        // onFocus={() => setShowSuggestion(true)}
-        // onBlur={() => setShowSuggestion(false)}
-      />
-      <CiSearch className="w-6  h-6 cursor-pointer " />
+    <div className="relative z-20 hidden sm:flex items-center w-full min-w-64 max-w-lg mr-2   py-2 px-2 border border-gray-300 rounded-full">
+      <div className=" flex flex-1">
+        <input
+          type="text"
+          className="flex-grow px-4 focus:outline-none bg-transparent"
+          placeholder="Search"
+          value={SearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowSuggestion(true)}
+          onBlur={() => setShowSuggestion(false)}
+        />
+        <CiSearch
+          className="w-6  h-6 cursor-pointer "
+          onClick={() => handleSuggestionClick(SearchQuery)}
+        />
+      </div>
+      {showSuggestion && (
+        <ul className="flex flex-col gap-y-3 bg-white shadow-md border absolute rounded-lg top-12 py-2 w-full">
+          {suggestions.map((value, index) => (
+            <li
+              key={index}
+              className=" rounded-lg px-3  hover:bg-gray-200 flex gap-x-4 items-center "
+              onClick={() => handleSuggestionClick(value)}
+            >
+              <CiSearch className="w-5  h-5  " />
+              <span>{value}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

@@ -15,6 +15,7 @@ const VideoContainer = () => {
     // console.log(jsonResult);
     setVideos(jsonResult.items);
   };
+
   return (
     <div className="flex items-center justify-center h-screen gap-x-2  w-full flex-wrap gap-y-4  pt-16  ">
       {videos.map((video) => (
