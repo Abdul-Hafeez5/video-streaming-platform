@@ -40,24 +40,25 @@ const ButtonList = () => {
 
   return (
     <div
-      className="flex fixed py-4 items-center bg-white w-full gap-x-2"
-      ref={containerRef}
+      className="flex fixed  py-4 items-center bg-white w-full gap-x-2"
+      // ref={containerRef}
     >
-      {startIndex > 0 && (
+      {/* {startIndex > 0 && (
         <button onClick={handlePrev} className="bg-gray-100 p-1 rounded-full">
           <FiChevronLeft className="w-6 h-6  " />
         </button>
-      )}
+      )} */}
       <div className="flex  overflow-hidden ">
-        {buttonList.slice(startIndex, endIndex).map((values, index) => (
+        {/* {buttonList.slice(startIndex, endIndex).map((values, index) => ( */}
+        {buttonList.map((values, index) => (
           <Button value={values} key={index} />
         ))}
       </div>
-      {endIndex < buttonList.length && (
+      {/* {endIndex < buttonList.length && (
         <button onClick={handleNext} className="bg-gray-100 p-1 rounded-full">
           <FiChevronRight className="w-6 h-6" />
         </button>
-      )} 
+      )}  */}
     </div>
   );
 };

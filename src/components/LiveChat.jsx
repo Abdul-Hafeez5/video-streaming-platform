@@ -24,7 +24,7 @@ const LiveChat = () => {
       dispatch(
         addComments({
           name: generateRandomName(),
-          comment: randomComment(20),
+          comment: randomComment(10),
           avatar:
             "https://yt4.ggpht.com/f60e9_dm56CWg9bZ5kYXYYMhGvn2LMRO5yQWlRJO2wk8cqq4IUvEokmyGzjGWOyXlBCQCQ2CLg=s32-c-k-c0x00ffffff-no-rj",
         })
@@ -35,7 +35,7 @@ const LiveChat = () => {
 
   return (
     <>
-      <div className="  w-full h-[550px] p-2 border bg-slate-100 rounded-lg ml-2 border-r-gray-500 overflow-y-scroll flex flex-col-reverse">
+      <div className="h-60 p-2  bg-slate-100 rounded-lg ml-2  overflow-y-scroll flex flex-col-reverse">
         {chatMessages.map((messages, index) => (
           <ChatMessage
             key={index}

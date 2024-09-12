@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const hamburgerSlice = createSlice({
   name: "hamburger",
   initialState: {
-    isMenuOpen: true,
+    isMenuOpen: false,
   },
   reducers: {
     toggleMenu: (state) => {
