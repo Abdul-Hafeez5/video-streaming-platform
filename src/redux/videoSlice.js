@@ -3,23 +3,43 @@ import { YOUTUBE_VIOEOS_API } from "../utils/constant";
 
 export const fetchVideos = createAsyncThunk(
   "videos/fetchVideos",
-  async (query, { getState }) => {
-    const videos = getState();
-    const nextPageToken = videos.nextPageToken || "";
-    const searchUrl = query ? 
-    const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-    const response = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}                     `
-    );
-    const data = await response.json();
-    return data.items;
+  async ({ query, pageToken }, { rejectWithValue }) => {
+    let url;
+    if (query) {
+      // url = `${YOUTUBE_SEARCH_API}${query}&pageToken=${pageToken || ""}`;
+      url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=50&pageToken=${
+        pageToken || ""
+      }&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`;
+    } else {
+      url = `${YOUTUBE_VIOEOS_API}&pageToken=${pageToken || ""}`;
+    }
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 const videoSlice = createSlice({
   name: "videos",
-  initialState: { videos: [], loading: false, error: null },
-  reducers: {},
+  initialState: {
+    videos: [],
+    loading: false,
+    searchQuery: "",
+    nextPageToken: null,
+    error: null,
+  },
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+      state.videos = []; // reset videos on new search
+      state.nextPageToken = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchVideos.pending, (state) => {
@@ -27,8 +47,15 @@ const videoSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchVideos.fulfilled, (state, action) => {
-        state.videos = action.payload;
+        console.log("action paylload", action.payload.items);
+        const items = action.payload.items || [];
+        if (Array.isArray(items)) {
+          state.videos = [...state.videos, ...items];
+        } else {
+          console.error("Expected items to be an array but got:", items);
+        }
         state.loading = false;
+        state.nextPageToken = action.payload.nextPageToken;
       })
       .addCase(fetchVideos.rejected, (state, action) => {
         state.loading = false;
@@ -36,5 +63,5 @@ const videoSlice = createSlice({
       });
   },
 });
-
+export const { setSearchQuery } = videoSlice.actions;
 export default videoSlice.reducer;

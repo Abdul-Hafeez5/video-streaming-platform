@@ -12,7 +12,7 @@ const WatchPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(closeMenu());
-  }, []);
+  }, [dispatch]);
   return (
     <div className=" mx-2">
       <ButtonList />

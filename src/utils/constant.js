@@ -4,12 +4,11 @@ import { SiShortcut } from "react-icons/si";
 import { MdSubscriptions } from "react-icons/md";
 
 export const YOUTUBE_VIOEOS_API =
-  "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&key=" +
+  "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&maxResults=50&key=" +
   API_KEY;
 
-// export const YOUTUBE_SEARCH_API =
-//   "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q={SEARCH_QUERY}&type=video&maxResults=10&key=" +
-//   API_KEY;
+// export const YOUTUBE_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q="`;
+export const YOUTUBE_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q="`;
 
 export const YOUTUBE_SEARCH_SUGGESTION_API =
   "https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
@@ -124,7 +123,4 @@ export const commentData = [
       },
     ],
   },
-
-  
-  
 ];

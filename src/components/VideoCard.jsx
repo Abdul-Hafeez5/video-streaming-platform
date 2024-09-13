@@ -5,7 +5,7 @@ const VideoCard = ({ info }) => {
 
   const { snippet, statistics } = info;
   const { thumbnails, title, channelTitle } = snippet;
-  const { viewCount } = statistics;
+  // const { viewCount } = statistics;
 
   return (
     <div className=" w-72 h-72 xs:w-96 md:w-72 lg:w-[320px] lg:h-[300px]   ">
@@ -23,7 +23,7 @@ const VideoCard = ({ info }) => {
         <div>
           <h1 className="font-bold max-h-20">{title}</h1>
           <h1 className="mt-1">{channelTitle}</h1>
-          <span className="">{viewCount} Views</span>
+          {/* <span className="">{viewCount} Views</span> */}
         </div>
       </div>
     </div>

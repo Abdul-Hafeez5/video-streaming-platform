@@ -40,7 +40,7 @@ const Head = () => {
           className=" hidden md:block w-7 h-7 rounded-full cursor-pointer"
         />
 
-        <CiSearch className="w-6 h-6 md:hidden cursor-pointer" />
+        <CiSearch className="w-6 h-6 sm:hidden cursor-pointer" />
       </div>
     </div>
   );

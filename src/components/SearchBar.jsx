@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-
+import { fetchVideos, setSearchQuery } from "../redux/videoSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
 import { cacheResults } from "../redux/searchSlice";
 import { CiSearch } from "react-icons/ci";
-import { fetchVideos } from "../redux/videoSlice";
 
 const SearchBar = () => {
-  const [SearchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [suggestions, setSuggestion] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
 
@@ -16,9 +15,9 @@ const SearchBar = () => {
   const searchCache = useSelector((store) => store.search);
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (searchCache[SearchQuery]) {
-        setSuggestion(searchCache[SearchQuery]);
-      } else if (SearchQuery.length > 0) {
+      if (searchCache[searchInput]) {
+        setSuggestion(searchCache[searchInput]);
+      } else if (searchInput.length > 0) {
         getSearchSuggestions();
       } else {
         setSuggestion([]);
@@ -29,11 +28,11 @@ const SearchBar = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [SearchQuery]);
+  }, [searchInput]);
 
   const getSearchSuggestions = async () => {
     try {
-      const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + SearchQuery);
+      const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + searchInput);
       if (!data.ok) {
         throw new Error(`http error status: ${data.status}`);
       }
@@ -44,7 +43,7 @@ const SearchBar = () => {
       // dispatch an action to update the cache
       dispatch(
         cacheResults({
-          [SearchQuery]: jsonData[1],
+          [searchInput]: jsonData[1],
         })
       );
     } catch (error) {
@@ -53,9 +52,16 @@ const SearchBar = () => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    dispatch(fetchVideos(suggestion));
-    setSearchQuery("");
-    setSuggestion([]);
+    setSearchInput(suggestion);
+    dispatch(setSearchQuery(suggestion));
+    dispatch(fetchVideos({ query: suggestion, pageToken: null }));
+  };
+  const handleSearch = () => {
+    if (searchInput) {
+      dispatch(setSearchQuery(searchInput));
+      dispatch(fetchVideos({ query: searchInput, pageToken: null }));
+      // setSearchInput("");
+    }
   };
 
   return (
@@ -65,23 +71,20 @@ const SearchBar = () => {
           type="text"
           className="flex-grow px-4 focus:outline-none bg-transparent"
           placeholder="Search"
-          value={SearchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           onFocus={() => setShowSuggestion(true)}
           onBlur={() => setShowSuggestion(false)}
         />
-        <CiSearch
-          className="w-6  h-6 cursor-pointer "
-          onClick={() => handleSuggestionClick(SearchQuery)}
-        />
+        <CiSearch className="w-6  h-6 cursor-pointer " onClick={handleSearch} />
       </div>
-      {showSuggestion && (
+      {showSuggestion && suggestions.length > 0 && (
         <ul className="flex flex-col gap-y-3 bg-white shadow-md border absolute rounded-lg top-12 py-2 w-full">
-          {suggestions.map((value, index) => (
+          {suggestions.map((value) => (
             <li
-              key={index}
+              key={value}
               className=" rounded-lg px-3  hover:bg-gray-200 flex gap-x-4 items-center "
-              onClick={() => handleSuggestionClick(value)}
+              onMouseDown={() => handleSuggestionClick(value)}
             >
               <CiSearch className="w-5  h-5  " />
               <span>{value}</span>
