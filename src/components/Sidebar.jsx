@@ -15,7 +15,7 @@ const Sidebar = () => {
     <div
       className={`${
         isMenuOpen ? "block" : "hidden"
-      } sm:block sm:col-span-2 mx-2 fixed sm:w-64 h-screen mt-4 bg-white z-20  `}
+      } sm:block sm:col-span-2 mx-2 fixed sm:w-64 h-screen mt-4 bg-white z-20   `}
     >
       <ul className="space-y-4 mb-3 h-full overflow-y-auto">
         {sideList.map((list, index) => (

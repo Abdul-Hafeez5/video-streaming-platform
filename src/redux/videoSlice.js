@@ -7,9 +7,10 @@ export const fetchVideos = createAsyncThunk(
     let url;
     if (query) {
       // url = `${YOUTUBE_SEARCH_API}${query}&pageToken=${pageToken || ""}`;
-      url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=50&pageToken=${
-        pageToken || ""
-      }&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`;
+      // url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=50&pageToken=${
+      //   pageToken || ""
+      // }&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`;
+      url = `${YOUTUBE_VIOEOS_API}&pageToken=${pageToken || ""}`;
     } else {
       url = `${YOUTUBE_VIOEOS_API}&pageToken=${pageToken || ""}`;
     }
