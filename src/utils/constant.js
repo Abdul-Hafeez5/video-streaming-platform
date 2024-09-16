@@ -1,4 +1,4 @@
-const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+export const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 import { IoMdHome } from "react-icons/io";
 import { SiShortcut } from "react-icons/si";
 import { MdSubscriptions } from "react-icons/md";
@@ -7,11 +7,14 @@ export const YOUTUBE_VIOEOS_API =
   "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&maxResults=50&key=" +
   API_KEY;
 
-// export const YOUTUBE_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q="`;
-export const YOUTUBE_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q="`;
+// export const YOUTUBE_SEARCH_API = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=`;
 
 export const YOUTUBE_SEARCH_SUGGESTION_API =
   "https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+  export const SEARCH_API_PART_1 = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=";
+  export const SEARCH_API_PART_2 = "&type=video&maxResults=50&pageToken="
+
 
 export const buttonList = [
   "All",

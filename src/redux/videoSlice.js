@@ -1,23 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { YOUTUBE_VIOEOS_API } from "../utils/constant";
+import {
+  YOUTUBE_VIOEOS_API,
+  API_KEY,
+  SEARCH_API_PART_1,
+  SEARCH_API_PART_2,
+} from "../utils/constant";
 
 export const fetchVideos = createAsyncThunk(
   "videos/fetchVideos",
-  async ({ query, pageToken }, { rejectWithValue }) => {
+  async ({ query = "", pageToken }, { rejectWithValue }) => {
     let url;
     if (query) {
-      // url = `${YOUTUBE_SEARCH_API}${query}&pageToken=${pageToken || ""}`;
-      // url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=50&pageToken=${
-      //   pageToken || ""
-      // }&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`;
-      url = `${YOUTUBE_VIOEOS_API}&pageToken=${pageToken || ""}`;
+      url = `${SEARCH_API_PART_1}${query}${SEARCH_API_PART_2}${
+        pageToken || ""
+      }&key=${API_KEY}`;
     } else {
       url = `${YOUTUBE_VIOEOS_API}&pageToken=${pageToken || ""}`;
     }
     try {
       const response = await fetch(url);
       const data = await response.json();
-      // console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -30,17 +32,10 @@ const videoSlice = createSlice({
   initialState: {
     videos: [],
     loading: false,
-    searchQuery: "",
     nextPageToken: null,
     error: null,
   },
-  reducers: {
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
-      state.videos = []; // reset videos on new search
-      state.nextPageToken = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchVideos.pending, (state) => {
@@ -48,7 +43,6 @@ const videoSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchVideos.fulfilled, (state, action) => {
-        console.log("action paylload", action.payload.items);
         const items = action.payload.items || [];
         if (Array.isArray(items)) {
           state.videos = [...state.videos, ...items];
@@ -64,5 +58,4 @@ const videoSlice = createSlice({
       });
   },
 });
-export const { setSearchQuery } = videoSlice.actions;
 export default videoSlice.reducer;

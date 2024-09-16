@@ -10,33 +10,28 @@ const VideoContainer = () => {
   const {
     videos = [],
     nextPageToken,
-    searchQuery,
     loading,
   } = useSelector((store) => store.videos);
-  // console.log(videos);
-  useEffect(() => {
-    dispatch(
-      fetchVideos({ searchQuery: searchQuery || "", nextPageToken: null })
-    );
-  }, [dispatch, searchQuery]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 200
-      ) {
-        if (nextPageToken && !loading) {
-          dispatch(
-            fetchVideos({ query: searchQuery, pageToken: nextPageToken })
-          );
-        }
+    dispatch(fetchVideos({ query: "", nextPageToken: null }));
+  }, [dispatch]);
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight - 200
+    ) {
+      if (nextPageToken && !loading) {
+        dispatch(fetchVideos({ query: "", pageToken: nextPageToken }));
       }
-    };
+    }
+  };
 
-    window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    // indow.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [dispatch, nextPageToken, searchQuery, loading]);
+  }, [dispatch, nextPageToken, loading]);
 
   if (loading) return <div>Loading ...</div>;
 

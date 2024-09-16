@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVideos, setSearchQuery } from "../redux/videoSlice";
+import { fetchVideos } from "../redux/videoSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constant";
 import { cacheResults } from "../redux/searchSlice";
@@ -33,11 +33,7 @@ const SearchBar = () => {
   const getSearchSuggestions = async () => {
     try {
       const data = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + searchInput);
-      if (!data.ok) {
-        throw new Error(`http error status: ${data.status}`);
-      }
       const jsonData = await data.json();
-      // console.log(jsonData);
       setSuggestion(jsonData[1]);
 
       // dispatch an action to update the cache
@@ -53,14 +49,11 @@ const SearchBar = () => {
 
   const handleSuggestionClick = (suggestion) => {
     setSearchInput(suggestion);
-    dispatch(setSearchQuery(suggestion));
     dispatch(fetchVideos({ query: suggestion, pageToken: null }));
   };
   const handleSearch = () => {
     if (searchInput) {
-      dispatch(setSearchQuery(searchInput));
       dispatch(fetchVideos({ query: searchInput, pageToken: null }));
-      // setSearchInput("");
     }
   };
 
